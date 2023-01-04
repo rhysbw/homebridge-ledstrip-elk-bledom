@@ -87,7 +87,7 @@ module.exports = class Device {
     if (!this.connected) return;
     if (this.write) {
       const buffer = Buffer.from(
-        `7e0004${status ? "01" : "00"}00000000ef`,
+        `7e0404${status ? "f00001" : "000000"}ff00ef`,
         "hex"
       );
       console.log("Write:", buffer);
@@ -103,7 +103,7 @@ module.exports = class Device {
     if (!this.connected) return;
     if (this.write) {
       const level_hex = ("0" + level.toString(16)).slice(-2);
-      const buffer = Buffer.from(`7e0001${level_hex}00000000ef`, "hex");
+      const buffer = Buffer.from(`7e0401${level_hex}01ffff00ef`, "hex");
       console.log("Write:", buffer);
       this.write.write(buffer, false, err => {
         if (err) console.log("Error:", err);
@@ -118,7 +118,7 @@ module.exports = class Device {
       const rhex = ("0" + r.toString(16)).slice(-2);
       const ghex = ("0" + g.toString(16)).slice(-2);
       const bhex = ("0" + b.toString(16)).slice(-2);
-      const buffer = Buffer.from(`7e000503${rhex}${ghex}${bhex}00ef`, "hex");
+      const buffer = Buffer.from(`7e070503${rhex}${ghex}${bhex}10ef`, "hex");
       console.log("Write:", buffer);
       this.write.write(buffer, false, err => {
         if (err) console.log("Error:", err);
